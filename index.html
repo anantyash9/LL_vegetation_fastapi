@@ -1,0 +1,33 @@
+<!-- index.htm file that displays a ply model. The point cloud is loaded from the same directory as the index.htm file. -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- import { PlyLoader } from 'https://unpkg.com/three/examples/jsm/loaders/PlyLoader.js'; -->
+    <script src="https://unpkg.com/three/build/three.min.js"></script>
+
+    <
+    <!-- <script src="https://unpkg.com/three/examples/jsm/controls/OrbitControls.js"></script> -->
+</head>
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+        var loader = new THREE.PlyLoader();
+        loader.load( 'model.ply', function ( geometry ) {
+            var material = new THREE.PointsMaterial( { size: 0.1, vertexColors: true } );
+            var points = new THREE.Points( geometry, material );
+            scene.add( points );
+        } );
+        camera.position.z = 5;
+        var animate = function () {
+            requestAnimationFrame( animate );;
+            renderer.render( scene, camera );
+        };
+        animate();
+    </script>
+
+</html>
